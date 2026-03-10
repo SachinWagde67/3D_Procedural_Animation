@@ -22,7 +22,7 @@ public class EIStateMachine : StateManager<EIStateEnum> {
 
     private void Awake() {
 
-        context = new EIContext(leftHandIKConstraint, rightHandIKConstraint, leftHandMRConstraint, rightHandMRConstraint, characterController);
+        context = new EIContext(leftHandIKConstraint, rightHandIKConstraint, leftHandMRConstraint, rightHandMRConstraint, characterController, transform.root);
         InitializeStates();
     }
 
@@ -34,5 +34,15 @@ public class EIStateMachine : StateManager<EIStateEnum> {
         statesMap.Add(EIStateEnum.Touch, new TouchState(context, EIStateEnum.Touch));
         statesMap.Add(EIStateEnum.Reset, new ResetState(context, EIStateEnum.Reset));
         CurrentState = statesMap[EIStateEnum.Reset];
+        ChangeState(EIStateEnum.Search);
+    }
+
+    private void OnDrawGizmos() {
+
+        Gizmos.color = Color.blueViolet;
+
+        if(context != null && context.ClosestPointFromShoulder != null) {
+            Gizmos.DrawSphere(context.ClosestPointFromShoulder, 0.1f);
+        }
     }
 }

@@ -19,39 +19,39 @@ public abstract class StateManager<StateEnum> : MonoBehaviour where StateEnum : 
             CurrentState.UpdateState();
         }
 
+        //StateEnum nextState = CurrentState.GetNextState();
+
         ////If Next State is same as current State
-        //if(!isChangingState && currentState.GetNextState().Equals(currentState.State)) {
-        //    currentState.UpdateState();
+        //if(!isChangingState && nextState.Equals(CurrentState.State)) {
+        //    CurrentState.UpdateState();
 
         //} else {
-        //    ChangeState(currentState.GetNextState());
+        //    ChangeState(nextState);
         //}
     }
 
-    public void ChangeState(StateEnum newState) {
+    protected void ChangeState(StateEnum nextState) {
 
-        if(CurrentState.State.Equals(newState)) {
+        Debug.Log($"CurrentState - {nextState}");
+
+        if(CurrentState.State.Equals(nextState)) {
             return;
         }
 
         isChangingState = true;
         CurrentState.ExitState();
-        CurrentState = statesMap[newState];
+        CurrentState = statesMap[nextState];
         CurrentState.EnterState();
         isChangingState = false;
-
-        //isChangingState = true;
-        //currentState.ExitState();
-        //currentState = statesMap[newState];
-        //currentState.EnterState();
-        //isChangingState = false;
     }
 
     private void OnTriggerEnter(Collider other) {
+
         CurrentState.OnTriggerEnter(other);
     }
 
     private void OnTriggerStay(Collider other) {
+
         CurrentState.OnTriggerStay(other);
     }
 

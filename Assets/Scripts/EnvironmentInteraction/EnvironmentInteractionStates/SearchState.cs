@@ -7,18 +7,25 @@ public class SearchState : EIState {
     }
 
     public override void EnterState() { }
-
+    public override void UpdateState() { }
     public override void ExitState() { }
 
     public override EIStateEnum GetNextState() {
         return State;
     }
 
-    public override void OnTriggerEnter(Collider other) { }
+    public override void OnTriggerEnter(Collider other) {
 
-    public override void OnTriggerExit(Collider other) { }
+        StartTrackingTargetPosition(other);
+    }
 
-    public override void OnTriggerStay(Collider other) { }
+    public override void OnTriggerExit(Collider other) {
 
-    public override void UpdateState() { }
+        ResetTrackingTargetPosition(other);
+    }
+
+    public override void OnTriggerStay(Collider other) {
+
+        UpdateTargetPosition(other);
+    }
 }

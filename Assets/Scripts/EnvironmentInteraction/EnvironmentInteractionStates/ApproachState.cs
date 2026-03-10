@@ -7,7 +7,7 @@ public class ApproachState : EIState {
     }
 
     public override void EnterState() { }
-
+    public override void UpdateState() { }
     public override void ExitState() { }
 
     public override EIStateEnum GetNextState() {
@@ -19,6 +19,4 @@ public class ApproachState : EIState {
     public override void OnTriggerExit(Collider other) { }
 
     public override void OnTriggerStay(Collider other) { }
-
-    public override void UpdateState() { }
 }
