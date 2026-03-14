@@ -53,5 +53,10 @@ public abstract class EIState : BaseState<EIStateEnum> {
         Vector3 shoulderPosition = new Vector3(x, y, z);
 
         context.ClosestPointFromShoulder = GetClosestPoint(context.CurrentCollider, shoulderPosition);
+
+        Vector3 rayDirection = (context.CurrentShoulderTransform.position - context.ClosestPointFromShoulder).normalized;
+        Vector3 offset = rayDirection * 0.05f;  //0.05f is the offsetDistance from the collider on which the hand will be touching.
+        Vector3 offsetPosition = context.ClosestPointFromShoulder + offset;
+        context.CurrentTargetTransform.position = new Vector3(offsetPosition.x, context.TargetPointYOffset, offsetPosition.z);
     }
 }

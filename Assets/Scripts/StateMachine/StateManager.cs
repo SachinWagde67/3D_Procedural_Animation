@@ -34,10 +34,6 @@ public abstract class StateManager<StateEnum> : MonoBehaviour where StateEnum : 
 
         Debug.Log($"CurrentState - {nextState}");
 
-        if(CurrentState.State.Equals(nextState)) {
-            return;
-        }
-
         isChangingState = true;
         CurrentState.ExitState();
         CurrentState = statesMap[nextState];

@@ -2,17 +2,16 @@ using UnityEngine;
 
 public class TouchState : EIState {
 
-    public TouchState(EIContext context, EIStateEnum eIStateEnum) : base(context, eIStateEnum) {
+    private EIStateMachine eIStateMachine;
 
+    public TouchState(EIContext context, EIStateEnum eIStateEnum, EIStateMachine stateMachine) : base(context, eIStateEnum) {
+
+        this.eIStateMachine = stateMachine;
     }
 
     public override void EnterState() { }
     public override void UpdateState() { }
     public override void ExitState() { }
-
-    public override EIStateEnum GetNextState() {
-        return State;
-    }
 
     public override void OnTriggerEnter(Collider other) { }
 

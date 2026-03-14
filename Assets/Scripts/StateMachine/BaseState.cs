@@ -16,6 +16,4 @@ public abstract class BaseState<StateEnum> where StateEnum : Enum {
     public abstract void OnTriggerEnter(Collider other);
     public abstract void OnTriggerStay(Collider other);
     public abstract void OnTriggerExit(Collider other);
-
-    public abstract StateEnum GetNextState();
 }

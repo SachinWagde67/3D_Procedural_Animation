@@ -15,6 +15,8 @@ public class EIContext {
     private MultiRotationConstraint rightHandMRConstraint;
     private CharacterController characterController;
     private Transform rootTransform;
+    private Vector3 leftTargetOriginalPosition;
+    private Vector3 rightTargetOriginalPosition;
 
     public TwoBoneIKConstraint LeftHandIKConstratint => leftHandIKConstraint;
     public TwoBoneIKConstraint RightHandIKConstraint => rightHandIKConstraint;
@@ -31,6 +33,10 @@ public class EIContext {
     public Collider CurrentCollider { get; set; }
     public Vector3 ClosestPointFromShoulder { get; set; } = Vector3.positiveInfinity;
     public float CharacterShoulderHeight { get; private set; }
+    public float TargetPointYOffset { get; set; } = 0f;
+    public float ColliderCenterY { get; set; }
+    public Vector3 CurrentTargetOriginalPosition { get; private set; }
+    public Quaternion TargetOriginalRotation { get; private set; }
 
     public EIContext(TwoBoneIKConstraint leftHandIKConstraint, TwoBoneIKConstraint rightHandIKConstraint, MultiRotationConstraint leftHandMRConstraint, MultiRotationConstraint rightHandMRConstraint, CharacterController characterController, Transform rootTransform) {
 
@@ -40,8 +46,13 @@ public class EIContext {
         this.rightHandMRConstraint = rightHandMRConstraint;
         this.characterController = characterController;
         this.rootTransform = rootTransform;
+        leftTargetOriginalPosition = leftHandIKConstraint.data.target.transform.localPosition;
+        rightTargetOriginalPosition = rightHandIKConstraint.data.target.transform.localPosition;
+        TargetOriginalRotation = leftHandIKConstraint.data.target.rotation;
 
         CharacterShoulderHeight = leftHandIKConstraint.data.root.transform.position.y;
+
+        SetCurrentBodySide(Vector3.positiveInfinity);
     }
 
     public void SetCurrentBodySide(Vector3 targetPosition) {
@@ -57,6 +68,7 @@ public class EIContext {
             CurrentBodySide = BodySide.Left;
             CurrentIKConstraint = leftHandIKConstraint;
             CurrentMRConstraint = leftHandMRConstraint;
+            CurrentTargetOriginalPosition = leftTargetOriginalPosition;
 
         } else {
 
@@ -64,6 +76,7 @@ public class EIContext {
             CurrentBodySide = BodySide.Right;
             CurrentIKConstraint = rightHandIKConstraint;
             CurrentMRConstraint = rightHandMRConstraint;
+            CurrentTargetOriginalPosition = rightTargetOriginalPosition;
         }
 
         CurrentShoulderTransform = CurrentIKConstraint.data.root.transform;
